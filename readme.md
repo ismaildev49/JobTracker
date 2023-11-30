@@ -1,4 +1,4 @@
-Certainly! Below is the provided information organized in Markdown format:
+Certainly! Here's the information presented in Markdown format:
 
 ---
 
@@ -6,7 +6,7 @@ Certainly! Below is the provided information organized in Markdown format:
 
 ### Deployment Strategy - Node.js
 
-The deployment strategy involves choosing between EJS for server-side rendering or deploying the frontend on GitHub Pages with the server hosted, possibly on MongoDB Atlas.
+The deployment strategy involves utilizing Node.js for server-side development.
 
 ### Routes
 
@@ -30,9 +30,11 @@ The deployment strategy involves choosing between EJS for server-side rendering 
   - `DELETE` (`/offer/delete/:id`): Delete a job application.
   - `UPDATE` (`/offer/update/:id`): Update a job application.
 
-### Implementation Details
+### Technologies
 
-#### Folder Structure
+- **EJS**: For rendering views.
+
+### Folder Structure
 
 Follow the structure similar to the Net Ninja:
 
@@ -46,16 +48,6 @@ Follow the structure similar to the Net Ninja:
   - `offerSchema`
 - **Frontend**
   - Views
-
-#### GitHub Repository
-
-Organize the project on GitHub.
-
-### Technologies
-
-- **EJS**: For rendering views.
-- **GitHub Pages**: For hosting the frontend.
-- **MongoDB Atlas**: For hosting the database.
 
 ### User Schema
 
@@ -107,4 +99,4 @@ offerSchema: {
 
 ---
 
-This Markdown document provides a structured overview of the deployment strategy, routes, implementation details, technologies, and development roles for the Node.js project.
+This Markdown document provides a structured overview of the Node.js project, including deployment strategy, routes, technologies, folder structure, and development roles.
