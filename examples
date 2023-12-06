@@ -1,0 +1,74 @@
+OFFERS
+
+{
+"title": "Job Title",
+"company": "Example Company",
+"website": "https://example.com",
+"contact": {
+"name": "John Doe",
+"email": "john.doe@example.com",
+"phone": 1234567890,
+"address": "123 Main Street"
+},
+"origin": "Recruitment Website",
+"status": "Open",
+"comment": "This is a sample job offer."
+}
+
+{
+"user": "609c4dd9db83871e4c79e02a", // Replace with a valid ObjectId
+"title": "Software Engineer Position",
+"company": "TechCorp",
+"website": "https://techcorp.com",
+"contact": {
+"name": "Hiring Manager",
+"email": "hiring.manager@techcorp.com",
+"phone": 1234567890,
+"address": "123 Tech Street"
+},
+"origin": "LinkedIn",
+"status": "Pending",
+"comment": "Looking for a candidate with strong programming skills."
+}
+
+{
+"user": "609c4dd9db83871e4c79e02b", // Replace with a valid ObjectId
+"title": "Product Manager Position",
+"company": "InnovateTech",
+"website": "https://innovatetech.com",
+"contact": {
+"name": "HR Department",
+"email": "hr@innovatetech.com",
+"phone": 9876543210,
+"address": "456 Innovation Avenue"
+},
+"origin": "Job Board",
+"status": "Open",
+"comment": "Looking for an experienced product manager to join our team."
+}
+
+
+
+USERS
+
+{
+    "firstName": "Bob",
+    "lastName": "Smith",
+    "email": "bob.smith@example.com",
+    "github": "bobsmith",
+    "profilePicture": "https://example.com/bob_profile.jpg",
+    "CV": "https://example.com/bob_cv.pdf",
+    "password": "safepassword456"
+    "offers" : [Offer]
+  }
+
+  {
+    "firstName": "Alice",
+    "lastName": "Johnson",
+    "email": "alice.johnson@example.com",
+    "github": "alicejohnson",
+    "profilePicture": "https://example.com/alice_profile.jpg",
+    "CV": "https://example.com/alice_cv.pdf",
+    "password": "strongpassword123"
+    "offers" : [Offer]
+  }
