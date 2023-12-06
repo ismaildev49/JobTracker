@@ -4,7 +4,7 @@
   "description": "Certainly! Below is the provided information organized in Markdown format:",
   "main": "app.js",
   "engines": {
-    "node": "20.x"
+    "node": "18.x"
   },
   "start": "node app.js",
   "scripts": {
