@@ -33,7 +33,7 @@ mongoose.connect(dbURI)
 
 // routes
 app.get('*', checkUser);
-/* app.get('/', (req, res) => res.redirect('home')); */
+app.get('/', (req, res) => res.redirect('dashboard'));
 app.use(routes);
 
 //cookies
