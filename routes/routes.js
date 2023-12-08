@@ -14,6 +14,7 @@ const registerController = require('../controllers/registerController');
 router.get('*', checkUser)
 router.post('*', checkUser)
 router.delete('*', checkUser)
+router.put('*', checkUser)
 
 // Register routes
 
