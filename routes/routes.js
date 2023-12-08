@@ -9,6 +9,10 @@ const dashboardController = require('../controllers/dashboardController');
 const offerController = require('../controllers/offerController');
 const registerController = require('../controllers/registerController');
 
+// LE MIDDLEWARE CHECKUSER EST OP, PERMET D'ACCEDER A L'ID DU USER AVEC LE LOCALSTORAGE
+
+router.get('*', checkUser)
+router.post('*', checkUser)
 
 // Register routes
 
@@ -20,18 +24,18 @@ router.get('/login', loginController.login_get);
 router.post('/login', loginController.login_post);
 
 // Profile routes
-router.get('/profile/:id', profileController.profile_get);
-router.put('/profile/:id', profileController.profile_update);
-router.delete('/profile/:id', profileController.profile_delete);
+router.get('/profile/:id',requireAuth, profileController.profile_get);
+router.put('/profile/:id',requireAuth, profileController.profile_update);
+router.delete('/profile/:id',requireAuth, profileController.profile_delete);
 
 // Dashboard routes
-router.get('/dashboard', dashboardController.dashboard_get);
+router.get('/dashboard',requireAuth, dashboardController.dashboard_get);
 
 // Offer routes
-router.post('/offer', offerController.offer_post);
-router.get('/offer', offerController.offer_get);
-/* router.get('/offer/:id', offerController.offer_get_id);
-router.delete('/offer/delete/:id', offerController.offer_delete);
+router.post('/offer',requireAuth, offerController.offer_post);
+router.get('/offer',requireAuth, offerController.offer_get);
+router.get('/offer/:id',requireAuth, offerController.offer_get_id);
+/* router.delete('/offer/delete/:id', offerController.offer_delete);
 router.put('/offer/update/:id', offerController.offer_update); */
 
 

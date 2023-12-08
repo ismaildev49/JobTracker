@@ -32,7 +32,6 @@ mongoose.connect(dbURI)
     .catch((err) => console.log(err));
 
 // routes
-app.get('*', checkUser);
 app.get('/', (req, res) => res.redirect('dashboard'));
 app.use(routes);
 

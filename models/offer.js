@@ -2,26 +2,26 @@ const mongoose = require('mongoose');
 
 const offerSchema = new mongoose.Schema({
 
-    // user may not be necessary but heh.
+  // user may not be necessary but heh.
 
-    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 
-    // only title is required in order to prevent creating an empty offer
+  // only title is required in order to prevent creating an empty offer
 
-    title: {type: String, required:[true, 'Please enter a title'] },
-    company: {type: String, },
-    website: {type: String, },
-    contact: {
-      name: {type: String, },
-      email: {type: String, },
-      phone: {type: Number},
-      address: {type: String, },
-    },
-    origin: {type: String, },
-    status: {type: String, },
-    comment: {type: String, },
-  });
-  
-  const Offer = mongoose.model('Application', offerSchema);
-  
-  module.exports = Offer;
+  title: { type: String,/*  required: [true, 'Please enter a title'] */ },
+  company: { type: String, },
+  website: { type: String, },
+  contact: {
+    name: { type: String, },
+    email: { type: String, },
+    phone: { type: Number },
+    address: { type: String, },
+  },
+  origin: { type: String, },
+  status: { type: String, },
+  comment: { type: String, },
+});
+
+const Offer = mongoose.model('Offer', offerSchema);
+
+module.exports =  Offer 

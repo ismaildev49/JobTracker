@@ -58,8 +58,8 @@ USERS
     "github": "bobsmith",
     "profilePicture": "https://example.com/bob_profile.jpg",
     "CV": "https://example.com/bob_cv.pdf",
-    "password": "safepassword456"
-    "offers" : [Offer]
+    "password": "safepassword456",
+    "offers" : []
   }
 
   {
@@ -69,6 +69,6 @@ USERS
     "github": "alicejohnson",
     "profilePicture": "https://example.com/alice_profile.jpg",
     "CV": "https://example.com/alice_cv.pdf",
-    "password": "strongpassword123"
-    "offers" : [Offer]
+    "password": "strongpassword123",
+    "offers" : []
   }

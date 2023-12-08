@@ -18,7 +18,10 @@ const userSchema = new mongoose.Schema({
     profilePicture: { type: String },
     CV: { type: String },
     password: { type: String, required: true, minlength: 6 },
-    offers: [],
+    offers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Offer'
+    }],
 });
 
 const User = mongoose.model('User', userSchema);
