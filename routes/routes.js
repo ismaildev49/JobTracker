@@ -13,6 +13,7 @@ const registerController = require('../controllers/registerController');
 
 router.get('*', checkUser)
 router.post('*', checkUser)
+router.delete('*', checkUser)
 
 // Register routes
 
@@ -35,8 +36,8 @@ router.get('/dashboard',requireAuth, dashboardController.dashboard_get);
 router.post('/offer',requireAuth, offerController.offer_post);
 router.get('/offer',requireAuth, offerController.offer_get);
 router.get('/offer/:id',requireAuth, offerController.offer_get_id);
-/* router.delete('/offer/delete/:id', offerController.offer_delete);
-router.put('/offer/update/:id', offerController.offer_update); */
+router.delete('/offer/:id', offerController.offer_delete);
+router.put('/offer/:id', offerController.offer_update);
 
 
 module.exports = router;
