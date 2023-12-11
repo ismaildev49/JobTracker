@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('../models/user');
 const Offer = require('../models/offer');
+const jwt = require('jsonwebtoken')
 
 //handle errors
 const handleErrors = (err) => {
@@ -56,10 +57,10 @@ const createToken = (id) => {
 module.exports.login_get = (req, res) => {
     res.render('login.ejs')
 }
-module.exports.login_post = (req, res) => {
-    module.exports.login_post = async (req, res) => {
+module.exports.login_post = async (req, res) => {
+    //module.exports.login_post = async (req, res) => {
         const { email, password } = req.body;
-    
+        console.log(req.body);
         try {
             const user = await User.login(email, password);
             const token = createToken(user._id);
@@ -74,5 +75,5 @@ module.exports.login_post = (req, res) => {
             const errors = handleErrors(err)
             res.status(400).json({ errors });
         }
-    }
+    //}
 }

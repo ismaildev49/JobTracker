@@ -26,9 +26,9 @@ router.get('/login', loginController.login_get);
 router.post('/login', loginController.login_post);
 
 // Profile routes
-router.get('/profile/:id',requireAuth, profileController.profile_get);
-router.put('/profile/:id',requireAuth, profileController.profile_update);
-router.delete('/profile/:id',requireAuth, profileController.profile_delete);
+router.get('/profile',requireAuth, profileController.profile_get);
+router.put('/profile', profileController.profile_update);
+router.delete('/profile', profileController.profile_delete);
 
 // Dashboard routes
 router.get('/dashboard',requireAuth, dashboardController.dashboard_get);

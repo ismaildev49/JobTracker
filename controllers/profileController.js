@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('../models/user');
 const Offer = require('../models/offer');
+const jwt = require('jsonwebtoken')
 
 
 module.exports.profile_get = (req, res) => {
@@ -9,23 +10,36 @@ module.exports.profile_get = (req, res) => {
 }
 module.exports.profile_update = async (req, res) => {
     // UPDATE LES INFORMATION DU USER DANS LA DB
-    const userData = req.body;
-    let currentUser = res.locals.user;
-
-    const userID = currentUser.id;
-
-    try {
-        const user = await User.findByIdAndUpdate(userID, userData, { new: true });
-
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-
-        console.log('User successfully updated:', user);
-        res.status(200).json({ message: 'User successfully updated', user });
-    } catch (error) {
-        console.error('Error updating user:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+    const {firstName, lastName, email, github, profilePicture, cv, password} = req.body
+    const token = req.cookies.jwt    
+    if (token) {
+        console.log('got token');
+        jwt.verify(token, 'crazy secret secret', async (err, decodedToken) => {
+            if (err) {
+                console.log(err.message);
+                res.redirect('/')
+            } else {
+                try {
+                    await User.findOneAndUpdate(
+                        {_id : decodedToken.id},
+                        {$set : {
+                            firstName,
+                            lastName,
+                            email, 
+                            github, 
+                            profilePicture, 
+                            cv, 
+                            password
+                        }});
+                        res.redirect('/profile')
+                } catch (error) {
+                    console.log(error);
+                }
+                
+            }
+        })
+    } else {
+        res.redirect('/login')
     }
 };
 
@@ -33,10 +47,21 @@ module.exports.profile_update = async (req, res) => {
 module.exports.profile_delete = async (req, res) => {
     //AJOUTER UN MESSAGE DE WARNING
     //SUPPRIME LE USER DE LA DB
-    const userData = req.body
-    let currentUser = res.locals.user;
 
-    const userID = currentUser.id;
-    const user = await Offer.findOneAndDelete(userID);
+    const token = req.cookies.jwt    
+    if (token) {
+        jwt.verify(token, 'crazy secret secret', async (err, decodedToken) => {
+            if (err) {
+                console.log(err.message);
+                res.redirect('/')
+            } else {
+                await User.findOneAndDelete({_id : decodedToken.id})
+                res.send(`User ${decodedToken.id} correctly deleted`)
+            }
+        })
+    } else {
+        res.redirect('/login')
+    }
+    
 
 }

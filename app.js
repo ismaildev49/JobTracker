@@ -26,7 +26,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 
 // database connection
-const dbURI = 'mongodb+srv://colas:avaT8sp70QPVOK8W@cluster0.mfbymrg.mongodb.net/jobtracker';
+const dbURI = 'mongodb+srv://ismaelbentatou:blabla123@cluster0.pnvb5it.mongodb.net/jobTracker';
 mongoose.connect(dbURI)
     .then(() => {
         console.log('MongoDB connected successfully');
