@@ -105,3 +105,9 @@ module.exports.offer_delete = async (req, res) => {
 
     
 }
+
+module.exports.get_Update_Offer = async (req, res) => {
+    const id = req.params.id
+    res.locals.offer = await Offer.findById(id)
+    res.render('update_offer')
+}

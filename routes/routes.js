@@ -39,6 +39,7 @@ router.get('/offer',requireAuth, offerController.offer_get);
 router.get('/offer/:id',requireAuth, offerController.offer_get_id);
 router.delete('/offer/:id', offerController.offer_delete);
 router.put('/offer/:id', offerController.offer_update);
+router.get('/offer/update/:id', offerController.get_Update_Offer)
 
 
 module.exports = router;
