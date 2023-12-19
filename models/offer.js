@@ -8,13 +8,15 @@ const offerSchema = new mongoose.Schema({
 
   // only title is required in order to prevent creating an empty offer
 
-  title: { type: String,/*  required: [true, 'Please enter a title'] */ },
+  title: {  type: String,  
+            required: [true, 'Please enter a title']  
+  },
   company: { type: String, },
   website: { type: String, },
   contact: {
     name: { type: String, },
     email: { type: String, },
-    phone: { type: Number },
+    phone: { type: String, },
     address: { type: String, },
   },
   origin: { type: String, },

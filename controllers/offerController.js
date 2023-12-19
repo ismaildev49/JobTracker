@@ -3,6 +3,39 @@ const User = require('../models/user');
 const Offer = require('../models/offer');
 const jwt = require('jsonwebtoken')
 
+
+//handle errors
+const handleErrors = (err) => {
+    console.log("in handle errors");
+    console.log("err.message :", err.message, "err.code : ", err.code);
+    let errors = {
+      title: "",
+      company: "",
+      website: "",
+      contact: {
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
+      },
+      origin: "",
+      status: "",
+      comment: "",
+    };
+  
+    //I need to handle the errors.
+    if (err.message.includes("Offer validation failed")) {
+      Object.values(err.errors).forEach((error) => {
+        errors[error.path] = error.message;
+      });
+    console.log("object.values.(err.errors)", Object.values(err.errors));
+    }
+    console.log("err :",err);
+  
+    return errors;
+  };
+
+
 module.exports.offer_post = async (req, res) => {
 
     const token = req.cookies.jwt
@@ -20,9 +53,13 @@ module.exports.offer_post = async (req, res) => {
                             await offer.save()
                             user.offers.push(offer._id)
                             await user.save()
-                            res.redirect('/')
+                            res.status(201).json({ offer: offer._id });
                         } catch (error) {
                             console.log(`An error occured when attempting to find the user by his ID, or when creating and saving the offer, or when saving the id of the offer in the user, or when saving the user : ${error}`);
+                            const errors = handleErrors(error);
+                            console.log("errors: ", errors);
+                            res.status(400).json({ errors });
+
                         }
                         
                     }
@@ -71,7 +108,7 @@ module.exports.offer_update = async (req, res) => {
                 comment,
             }});
             console.log("offer updated");
-            res.redirect('/')
+            res.status(201).json({ offer: offerId });
     } catch (error) {
         console.log(error)
     }

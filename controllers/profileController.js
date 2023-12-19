@@ -8,6 +8,11 @@ module.exports.profile_get = (req, res) => {
     //AFFICHE LA PAGE PROFIL DU USER, REDIRECT VERS LOGIN SI PAS DE TOKEN
     res.render('profile.ejs')
 }
+
+module.exports.profile_get_update = (req, res) => {
+    //AFFICHE LA PAGE UPDATE DU USER, REDIRECT VERS LOGIN SI PAS DE TOKEN
+    res.render('update_user.ejs')
+}
 module.exports.profile_update = async (req, res) => {
     // UPDATE LES INFORMATION DU USER DANS LA DB
     const {firstName, lastName, email, github, profilePicture, cv, password} = req.body

@@ -1,12 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>this is a profile page</h1>
-    <p><%=user.firstName%></p>
+<%- include('partials/header') -%>
+    <section class="profile-section">
+        <div class="container">
+            <h1>My profile  <a href="/update/profile"><i class="fas fa-pen-square" style="color: #050505;"></i></a></h1>
+            
+            <div class="profile">
+                <div class="profile-picture">
+                    <img src="<%= user.profilePicture.url %>" alt="profile picture">
+                </div>
+                <div class="profile-info">
+                    <h1>Full name :</h1> <h1><%= user.firstName %> <%= user.lastName %></h1>
+                    <h1>Email :</h1> <h1><%= user.email %> </h1>
+                    <h1>Github :</h1> <h1><%= user.github %> </h1>
+
+                    <button class="btn"><a href="<%= user.CV.url %>">Download CV</a></button>
+                    <br>
+                    <button class="btn"><a href="<%= user.CV.url %>">Upload new CV</a></button>
+                    <button class="btn"><a href="<%= user.CV.url %>">Change password</a></button>
+
+
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>

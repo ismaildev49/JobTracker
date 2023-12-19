@@ -1,85 +1,131 @@
-const mongoose = require('mongoose');
-const User = require('../models/user');
-const Offer = require('../models/offer');
-const jwt = require('jsonwebtoken');
-const { response } = require('express');
+const mongoose = require("mongoose");
+const User = require("../models/user");
+const Offer = require("../models/offer");
+const jwt = require("jsonwebtoken");
+const cloudinary = require("../utils/cloudinary");
 
-// handle errors
+const fs = require("fs");
+
+//handle errors
 
 const handleErrors = (err) => {
-    console.log(err.message);
-    console.log(err.code);
-    let errors = {
-        email: '',
-        password: '',
-    }
-    //duplicate error code
+  console.log("in handle errors");
+  console.log(err.message, err.code);
+  let errors = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    github: "",
+    profilePicture: "",
+    CV: "",
+    password: "",
+  };
 
-    if (err.code === 11000) {
-        errors.email = 'that email is already registered'
-        return errors;
-    }
-    //validation errors
+  //incorrect email
+  if (err.message === "Incorrect email") {
+    errors.email = "that email is not registered";
+  }
+  //incorrect password
+  if (err.message === "Incorrect password") {
+    errors.password = "that password is incorrect";
+  }
 
-
-    if (err.message.includes('user validation failed')) {
-        Object.values(err.errors).forEach(error => {
-            let properties = error.properties;
-            errors[properties.path] = properties.message
-        })
-    }
-
-    //incorrect email
-
-    if (err.message === 'incorrect email') {
-        errors.email = 'that email is not registered'
-     }
-
-     //incorrect password
-
-     if (err.message === 'incorrect password') {
-        errors.password = 'that password is incorrect'
-     }
-
+  // duplicate error code
+  if (err.code === 11000) {
+    errors.email = "This email is already registered";
     return errors;
-}
+  }
+
+  //
+  if (err.message.includes("User validation failed")) {
+    Object.values(err.errors).forEach(({ properties }) => {
+      errors[properties.path] = properties.message.replace("Path", "");
+    });
+  }
+
+  return errors;
+};
 
 // create tokens
 
-const maxAge = 3 * 24 * 60 * 60 * 1000
+const maxAge = 3 * 24 * 60 * 60 * 1000;
 
 const createToken = (id) => {
-    return jwt.sign({ id }, 'crazy secret secret', {
-        expiresIn: maxAge
-    })
-}
+  return jwt.sign({ id }, "crazy secret secret", {
+    expiresIn: maxAge,
+  });
+};
 
 module.exports.register_get = (req, res) => {
-    //RENDER LA PAGE REGISTER
-    res.render('register.ejs')
-}
-module.exports.register_post = async(req, res) => {
-    //AJOUTER UN USER DANS LA DB
+  //RENDER LA PAGE REGISTER
+  res.render("register.ejs");
+};
+module.exports.register_post = async (req, res) => {
+  //AJOUTER UN USER DANS LA DB
 
-        const { firstName, lastName, email, github, profilePicture, CV, password, offers } = req.body;
-    
-        try {
-            const user = await User.create({  firstName, lastName, email, github, profilePicture, CV, password, offers });
-            const token = createToken(user._id);
-            res.cookie('jwt', token, {
-                httpOnly: true,
-                maxAge: maxAge
-            })
-            res.status(201).json({ user: user._id });
-        }
-        catch (err) {
-            const errors = handleErrors(err)
-            res.status(400).json({ errors })
-        }
-    
-        console.log("user created" + email, password);
-    
-        /* res.send('new signup'); */
+  const {
+    firstName,
+    lastName,
+    email,
+    github,
+    profilePicture,
+    CV,
+    password,
+    offers,
+  } = req.body;
+  const uploader = async (path) => await cloudinary.uploads(path, "Images");
 
-    
-}
+  const profilePictureurls = [];
+  const CVurls = [];
+  const files = req.files;
+  console.log('files : ', files);
+  for (const file of files.profilePicture) {
+    const { path } = file;
+    console.log('path :',path);
+    const newPath = await uploader(path);
+    profilePictureurls.push(newPath);
+    fs.unlinkSync(path);
+  }
+    for (const file of files.cv) {
+        const { path } = file;
+        const newPath = await uploader(path);
+        CVurls.push(newPath);
+        console.log("path :", path);
+        fs.unlinkSync(path);
+    }
+    console.log('cvurls :',CVurls);
+    console.log('profilePictureurls :',profilePictureurls);
+
+  
+  try {
+    const user = await User.create({
+      firstName,
+      lastName,
+      email,
+      github,
+      profilePicture: {
+        public_id: profilePictureurls[0].id,
+        url: profilePictureurls[0].url,
+      },
+      CV : {
+        public_id: CVurls[0].id,
+        url: CVurls[0].url,
+      },
+      password,
+      offers,
+    });
+    console.log("user created");
+    const token = createToken(user._id);
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      maxAge: maxAge,
+    });
+    res.status(201).json({ user: user._id });
+  } catch (err) {
+    console.log("error when attempteing to create the user in the database");
+    const errors = handleErrors(err);
+    console.log("errors: ", errors);
+    res.status(400).json({ errors });
+  }
+};
+
