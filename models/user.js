@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Offer = require("../models/offer");
 const { isEmail } = require("validator");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
