@@ -133,7 +133,7 @@ module.exports.offer_delete = async (req, res) => {
                 })
                 await Offer.findOneAndDelete(
                     {_id : offerId})
-                res.redirect('/')
+                res.status(200).json({status: "success"})
                 
             }
         })
