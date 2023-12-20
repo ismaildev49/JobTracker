@@ -105,14 +105,14 @@ module.exports.register_post = async (req, res) => {
       lastName,
       email,
       github,
-      profilePicture: {
+      profilePicture: profilePictureurls.length > 0 ? {
         public_id: profilePictureurls[0].id,
         url: profilePictureurls[0].url,
-      },
-      CV : {
+       } : "",
+       CV : CVurls.length > 0 ? {
         public_id: CVurls[0].id,
         url: CVurls[0].url,
-      },
+       } : "",
       password,
       offers,
     });

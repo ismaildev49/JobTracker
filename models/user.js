@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [isEmail, "Invalid email format"],
   },
-  github: { type: String, unique: true },
+  github: { type: String },
   profilePicture: {
     public_id: { type: String },
     url: { type: String },
@@ -42,21 +42,6 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-
-
-userSchema.pre("findOneAndUpdate", async function (next) {
-  console.log("this.update.password", this._update.password);
-  if (!this._update.password) {
-    // If the password field is not modified, move to the next middleware
-    return next();
-}
-console.log("this.password",this.password);
-const salt = await bcrypt.genSalt();
-this._update.password = await bcrypt.hash(this._update.password, salt);
-  
-  next();
-
-});
 
 
 

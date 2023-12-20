@@ -70,11 +70,18 @@ module.exports.profile_update = async (req, res) => {
               user.github = github;
             }
 
-            if (profilePictureurls) {
-              user.profilePicture = profilePictureurls[0];
+            if (profilePictureurls.length > 0) {
+              user.profilePicture = {
+                public_id: profilePictureurls[0].id,
+                url: profilePictureurls[0].url,
+              };
+              
             }
-            if (CVurls) {
-              user.CV = CVurls[0];
+            if (CVurls.length > 0) {
+              user.CV = {
+                public_id: CVurls[0].id,
+                url: CVurls[0].url,
+              };
             }
             if (password) {
               user.password = password;
