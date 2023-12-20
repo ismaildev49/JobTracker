@@ -24,11 +24,11 @@ module.exports.profile_update = async (req, res) => {
     console.log("got token");
     jwt.verify(token, "crazy secret secret", async (err, decodedToken) => {
       if (err) {
-        console.log(err.message);
+        
         res.redirect("/");
       } else {
         const uploader = async (path) =>
-          await cloudinary.uploads(path, "Images");
+        await cloudinary.uploads(path, "Images");
         const profilePictureurls = [];
         const CVurls = [];
         const files = req.files;
