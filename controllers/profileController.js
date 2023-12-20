@@ -23,8 +23,7 @@ module.exports.profile_update = async (req, res) => {
   if (token) {
     console.log("got token");
     jwt.verify(token, "crazy secret secret", async (err, decodedToken) => {
-      if (err) {
-        
+      if (err) {        
         res.redirect("/");
       } else {
         const uploader = async (path) =>
@@ -96,6 +95,7 @@ module.exports.profile_update = async (req, res) => {
       }
     });
   } else {
+    console.log("no token");
     res.redirect("/login");
   }
 };
