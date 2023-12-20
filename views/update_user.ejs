@@ -113,7 +113,7 @@
             const data = await res.json();
             console.log(data);
             if (data.errors) {
-                
+                console.log("data.errors : ", data.errors);
                 firstNameError.textContent = data.errors.firstName;
                 lastNameError.textContent = data.errors.lastName;
                 emailError.textContent = data.errors.email;
@@ -127,7 +127,7 @@
                 location.assign('/');
             }
             } catch (error) {
-                console.log(error);
+                console.log("in the catch", error);
             } 
             if (repeatPasswordValue !== passwordValue) {
                 repeatPasswordError.textContent = `Password doesn't match`;
