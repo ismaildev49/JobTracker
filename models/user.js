@@ -42,6 +42,24 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+
+
+userSchema.pre("findOneAndUpdate", async function (next) {
+  console.log("this.update.password", this._update.password);
+  if (!this._update.password) {
+    // If the password field is not modified, move to the next middleware
+    return next();
+}
+console.log("this.password",this.password);
+const salt = await bcrypt.genSalt();
+this._update.password = await bcrypt.hash(this._update.password, salt);
+  
+  next();
+
+});
+
+
+
 //Static method to login user
 
 userSchema.statics.login = async function (email, password) {

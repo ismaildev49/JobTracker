@@ -68,8 +68,6 @@ module.exports.register_post = async (req, res) => {
     lastName,
     email,
     github,
-    profilePicture,
-    CV,
     password,
     offers,
   } = req.body;
@@ -79,6 +77,7 @@ module.exports.register_post = async (req, res) => {
   const CVurls = [];
   const files = req.files;
   console.log('files : ', files);
+  if (files.profilePicture) {
   for (const file of files.profilePicture) {
     const { path } = file;
     console.log('path :',path);
@@ -86,6 +85,8 @@ module.exports.register_post = async (req, res) => {
     profilePictureurls.push(newPath);
     fs.unlinkSync(path);
   }
+  }
+  if (files.cv) {
     for (const file of files.cv) {
         const { path } = file;
         const newPath = await uploader(path);
@@ -93,6 +94,7 @@ module.exports.register_post = async (req, res) => {
         console.log("path :", path);
         fs.unlinkSync(path);
     }
+  }
     console.log('cvurls :',CVurls);
     console.log('profilePictureurls :',profilePictureurls);
 
